@@ -1,5 +1,3 @@
-// src/context/CartContext.js
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -27,14 +25,12 @@ export const CartProvider = ({ children }) => {
       let updatedCart;
 
       if (existingProductIndex !== -1) {
-        // Increment the quantity
         updatedCart = prevCart.map((item, index) =>
           index === existingProductIndex
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // Add the new product with quantity 1
         updatedCart = [...prevCart, { ...product, quantity: 1 }];
       }
 
@@ -60,8 +56,15 @@ export const CartProvider = ({ children }) => {
     toast.success("Removed from cart", { autoClose: 500 });
   };
 
+  const clearCart = () => {
+    setCart([]);
+    updateLocalStorage([]); // Clear local storage as well
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

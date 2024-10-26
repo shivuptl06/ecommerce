@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function OrderDetails() {
   const [totalCost, setTotalCost] = useState(0);
-  const { cart, setCart } = useCart(); // Make sure to destructure setCart from useCart
+  const { cart, clearCart } = useCart(); // Ensure setCart is destructured from useCart
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -17,8 +17,6 @@ function OrderDetails() {
   });
 
   useEffect(() => {
-    console.log("Current cart:", cart); // For debugging purposes
-
     const calculateTotalPrice = () => {
       if (cart.length > 0) {
         const total = cart.reduce(
@@ -52,8 +50,8 @@ function OrderDetails() {
       toast.error("Please fill in all the details");
     } else {
       toast.success("Your Order Has Been Placed");
+      clearCart([]); // Clear the cart
       localStorage.removeItem("cartItems");
-      setCart([]); // Clear the cart state
       navigate("/");
 
       // Additional order handling logic can go here
@@ -68,8 +66,6 @@ function OrderDetails() {
       <div className="border border-gray-300 flex-1 max-w-xl bg-white rounded-lg shadow-xl p-6">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Order Details</h1>
         <form onSubmit={handleOrder} className="space-y-4">
-          {" "}
-          {/* Use handleOrder here */}
           <div className="flex flex-col space-y-2">
             <input
               type="text"
