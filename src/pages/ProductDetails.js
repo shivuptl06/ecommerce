@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./css/ProductDetails.css";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,11 @@ const ProductDetails = () => {
 
   function handleAddToCart(product) {
     addToCart(product);
+    navigate("/");
+  }
+
+  function goBack() {
+    console.log("Navigating back to home"); // Debugging log
     navigate("/");
   }
 
@@ -63,6 +68,13 @@ const ProductDetails = () => {
           >
             <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
             Add To Cart
+          </button>
+          <button
+            className="border bg-blue-600 p-2 rounded-xl w-full shadow-lg"
+            onClick={goBack}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+            Go Back
           </button>
         </div>
       </div>
