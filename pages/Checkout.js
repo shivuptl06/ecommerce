@@ -10,7 +10,7 @@ const Checkout = () => {
 
   function proceedToPayement() {
     toast.success("Added To Your Order");
-    navigate("/"); // Redirect to landing page
+    navigate("/order-form"); // Redirect to landing page
   }
 
   return (

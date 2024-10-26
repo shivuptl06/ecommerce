@@ -1,56 +1,47 @@
+// src/components/Navbar.js
+
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext"; // Import useCart hook
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesome
+import { useCart } from "../context/CartContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
   faSignInAlt,
   faUserPlus,
-} from "@fortawesome/free-solid-svg-icons"; // Import icons
-import { toast } from "react-toastify"; // Import toast for notifications
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { cart } = useCart(); // Get cart data
-  const [isCartOpen, setIsCartOpen] = useState(false); // State to manage cart visibility
-  const { removeFromCart } = useCart();
-  const modalRef = useRef(null); // Reference for the cart modal
-
+  const { cart, removeFromCart } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const modalRef = useRef(null);
 
   const toggleCart = () => {
-    setIsCartOpen((prev) => !prev); // Toggle cart visibility
+    setIsCartOpen((prev) => !prev);
   };
 
-  const handleLogin = () => {
-    toast.success("Logged in successfully!");
+  // Calculate total quantity
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
+  const handleRemoveFromCart = (item) => {
+    removeFromCart(item);
   };
 
-  const handleSignup = () => {
-    toast.success("Signed up successfully!");
-  };
-
-  const removeItems = (item, index) => {
-    removeFromCart(item, index);
-  };
-
-  // Close modal when clicking outside it
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsCartOpen(false); // Close the modal
+      setIsCartOpen(false);
     }
   };
 
-  console.log(cart)
-
   useEffect(() => {
     if (isCartOpen) {
-      // Only add event listener if the cart is open
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // Cleanup
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isCartOpen]);
 
@@ -71,27 +62,24 @@ const Navbar = () => {
           >
             <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
             <span className="hidden sm:inline">
-              Cart ({cart.length > 0 ? cart.length : 0})
-            </span>{" "}
-            {/* Show count on small and larger screens */}
+              Cart ({totalQuantity})
+            </span>
           </button>
 
           <div
             className="cursor-pointer hover:text-blue-600"
-            onClick={handleLogin}
+            onClick={() => toast.success("Logged in successfully!")}
           >
             <FontAwesomeIcon icon={faSignInAlt} className="mr-1" />
-            <span className="hidden sm:inline">Login</span>{" "}
-            {/* Show text on small and larger screens */}
+            <span className="hidden sm:inline">Login</span>
           </div>
 
           <div
             className="cursor-pointer hover:text-blue-600"
-            onClick={handleSignup}
+            onClick={() => toast.success("Signed up successfully!")}
           >
             <FontAwesomeIcon icon={faUserPlus} className="mr-1" />
-            <span className="hidden sm:inline">Signup</span>{" "}
-            {/* Show text on small and larger screens */}
+            <span className="hidden sm:inline">Signup</span>
           </div>
         </div>
       </nav>
@@ -108,7 +96,7 @@ const Navbar = () => {
                 <p className="text-center">Your cart is empty.</p>
               ) : (
                 <ol className="space-y-4">
-                  {cart.map((item, index) => (
+                  {cart.map((item) => (
                     <li
                       key={item.id}
                       className="flex items-center space-x-4 border-b pb-2 mb-2"
@@ -121,12 +109,15 @@ const Navbar = () => {
                       <div className="flex-1">
                         <h3 className="font-medium">{item.title}</h3>
                         <p className="text-gray-700">
-                          ${item.price.toFixed(2)}
+                          ${Number(item.price).toFixed(2)} x {item.quantity}
+                        </p>
+                        <p className="text-gray-700">
+                          Total: ${Number(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                       <button
                         className="bg-red-500 text-white rounded px-2 py-1 text-sm hover:bg-red-600"
-                        onClick={() => removeItems(item, index)}
+                        onClick={() => handleRemoveFromCart(item)}
                       >
                         Remove
                       </button>

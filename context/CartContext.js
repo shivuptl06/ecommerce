@@ -1,45 +1,76 @@
-// // src/context/CartContext.js
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-// import React, { createContext, useContext, useEffect, useState } from "react";
-// import { toast } from "react-toastify";
+// Create CartContext
+const CartContext = createContext();
 
-// // Create CartContext
-// const CartContext = createContext();
+// Create a provider component
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
 
-// // Create a provider component
-// export const CartProvider = ({ children }) => {
-//   const [cart, setCart] = useState([]);
-//   let cartItems;
-//   useEffect(() => {
-//     cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-//     setCart(cartItems);
-//   }, []);
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCart(cartItems);
+  }, []);
 
-//   const addToCart = (product) => {
-//     setCart((prevCart) => [...prevCart, product]);
-//     cartItems = [...cart, product];
-//     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-//     console.log(localStorage.getItem("cartItems"));
-//     toast.success("Added To Cart");
-//   };
+  const updateLocalStorage = (updatedCart) => {
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+  };
 
-//   const removeFromCart = (item, index) => {
-//     const filteredItems = cart.filter((prevCart) => prevCart.id !== item.id);
-//     setCart(filteredItems);
-//     console.log("New Cart Array", filteredItems);
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingProductIndex = prevCart.findIndex(
+        (item) => item.id === product.id
+      );
+      let updatedCart;
 
-//     localStorage.setItem("cartItems", JSON.stringify(filteredItems));
-//     toast.success("Removed from cart");
-//   };
+      if (existingProductIndex !== -1) {
+        updatedCart = prevCart.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        updatedCart = [...prevCart, { ...product, quantity: 1 }];
+      }
 
-//   return (
-//     <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-//       {children}
-//     </CartContext.Provider>
-//   );
-// };
+      updateLocalStorage(updatedCart);
+      return updatedCart;
+    });
+    toast.success("Added To Cart", { autoClose: 500 });
+  };
 
-// // Create a custom hook to use the CartContext
-// export const useCart = () => {
-//   return useContext(CartContext);
-// };
+  const removeFromCart = (item) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart
+        .map((product) =>
+          product.id === item.id
+            ? { ...product, quantity: Math.max(product.quantity - 1, 0) }
+            : product
+        )
+        .filter((product) => product.quantity > 0);
+
+      updateLocalStorage(updatedCart);
+      return updatedCart;
+    });
+    toast.success("Removed from cart", { autoClose: 500 });
+  };
+
+  const clearCart = () => {
+    setCart([]);
+    updateLocalStorage([]); // Clear local storage as well
+  };
+
+  return (
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+// Create a custom hook to use the CartContext
+export const useCart = () => {
+  return useContext(CartContext);
+};
