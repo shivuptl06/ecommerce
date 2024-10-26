@@ -111,7 +111,7 @@ const Navbar = () => {
                       />
                       <div className="flex-1">
                         <h3
-                          className="font-medium cursor-pointer"
+                          className="font-medium cursor-pointer text-blue-500 hover:text-blue-700 underline"
                           onClick={() => handleTitleClick(item.id)}
                         >
                           {item.title}

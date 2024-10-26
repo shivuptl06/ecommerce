@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
         />
       </Link>
       <div className="flex-1 p-4">
-        <h3 className="text-lg font-semibold">
+        <h3 className="text-lg font-semibold underline text-center">
           <Link to={`/product/${product.id}`}>{product.title}</Link>
         </h3>
         <p className="text-gray-700 font-light text-base">
