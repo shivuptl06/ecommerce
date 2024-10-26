@@ -1,10 +1,9 @@
-// index.js
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { CartProvider } from "./context/CartContext"; // Adjust the path as necessary
+import { CartProvider } from "./context/CartContext";
 
 ReactDOM.render(
   <React.StrictMode>

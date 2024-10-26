@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
     addToCart(product);
   };
 
-  const discountedPrice = product.price - 3; // Adjust based on your discount logic
+  const discountedPrice = product.price - 3; 
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">

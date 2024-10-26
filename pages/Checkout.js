@@ -18,7 +18,7 @@ const Checkout = () => {
       <h2 className="text-2xl font-bold text-center">Checkout</h2>
       <div className="flex justify-center m-4">
         <button
-          onClick={proceedToPayement} // Use a button for navigation
+          onClick={proceedToPayement} 
           className="p-2 border flex justify-center items-center bg-blue-600 text-white rounded w-2/3 md:w-1/3"
         >
           Proceed To Payment

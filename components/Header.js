@@ -1,20 +1,20 @@
-// src/Header.js
-
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faShoppingCart,
+  faSignInAlt,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Header = () => {
   const handleLogin = () => {
-    // Simulate login logic here
-    toast.success('Logged in successfully!');
+    toast.success("Logged in successfully!");
   };
 
   const handleSignup = () => {
-    // Simulate signup logic here
-    toast.success('Signed up successfully!');
+    toast.success("Signed up successfully!");
   };
 
   return (
@@ -22,20 +22,19 @@ const Header = () => {
       <nav>
         <ul className="flex space-x-4">
           <li className="cursor-pointer hover:text-blue-600">
-            {/* Wrap Cart in Link to navigate to the cart page */}
             <Link to="/cart" className="flex items-center">
               <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
               Cart
             </Link>
           </li>
-          <li 
+          <li
             className="cursor-pointer hover:text-blue-600"
             onClick={handleLogin}
           >
             <FontAwesomeIcon icon={faSignInAlt} className="mr-1" />
             Login
           </li>
-          <li 
+          <li
             className="cursor-pointer hover:text-blue-600"
             onClick={handleSignup}
           >

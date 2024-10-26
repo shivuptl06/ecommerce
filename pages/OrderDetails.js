@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function OrderDetails() {
   const [totalCost, setTotalCost] = useState(0);
-  const { cart, clearCart } = useCart(); // Ensure setCart is destructured from useCart
+  const { cart, clearCart } = useCart();
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -45,7 +45,7 @@ function OrderDetails() {
   };
 
   const handleOrder = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
     if (isAnyFieldEmpty()) {
       toast.error("Please fill in all the details");
     } else {
@@ -54,7 +54,6 @@ function OrderDetails() {
       localStorage.removeItem("cartItems");
       navigate("/");
 
-      // Additional order handling logic can go here
     }
   };
 

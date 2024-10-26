@@ -1,6 +1,6 @@
 /* styles.css */
 .text-sliced {
     text-decoration: line-through;
-    text-decoration-thickness: 2px; /* Example: adjust thickness */
-    text-decoration-color: rgb(94, 91, 91); /* Example: change color */
+    text-decoration-thickness: 2px; 
+    text-decoration-color: rgb(94, 91, 91); 
   }
