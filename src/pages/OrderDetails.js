@@ -45,7 +45,7 @@ function OrderDetails() {
   };
 
   const handleOrder = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (isAnyFieldEmpty()) {
       toast.error("Please fill in all the details");
     } else {
@@ -53,16 +53,15 @@ function OrderDetails() {
       clearCart([]); // Clear the cart
       localStorage.removeItem("cartItems");
       navigate("/");
-
     }
   };
 
   return (
     <div className="flex flex-col lg:flex-row justify-around items-center lg:min-h-[90vh] p-5 space-y-5 lg:space-y-0">
-      <div className="w-full lg:w-1/4">
+      <div className="w-full lg:w-1/4 ">
         <PayCard totalPrice={totalCost} />
       </div>
-      <div className="border border-gray-300 flex-1 max-w-xl bg-white rounded-lg shadow-xl p-6">
+      <div className="border border-gray-300 flex-1 w-full xl:max-w-xl bg-white rounded-lg shadow-xl p-6">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Order Details</h1>
         <form onSubmit={handleOrder} className="space-y-4">
           <div className="flex flex-col space-y-2">

@@ -37,7 +37,7 @@ function PayCard({ totalPrice }) {
   ).toFixed(2);
 
   return (
-    <div className="flex flex-col border max-w-11/12 p-5">
+    <div className="flex flex-col border max-w-11/12 p-5 rounded-lg">
       {/* Coupon Section */}
       <div className="flex justify-center items-center mb-4">
         <FontAwesomeIcon icon={faTag} className="mr-2" size="lg" />
