@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function OrderDetails() {
   const [totalCost, setTotalCost] = useState(0);
-  const { cart } = useCart();
+  const { cart, setCart } = useCart(); // Make sure to destructure setCart from useCart
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -42,11 +42,6 @@ function OrderDetails() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("User details submitted:", userDetails);
-  };
-
   const isAnyFieldEmpty = () => {
     return Object.values(userDetails).some((value) => value.trim() === "");
   };
@@ -57,6 +52,8 @@ function OrderDetails() {
       toast.error("Please fill in all the details");
     } else {
       toast.success("Your Order Has Been Placed");
+      localStorage.removeItem("cartItems");
+      setCart([]); // Clear the cart state
       navigate("/");
 
       // Additional order handling logic can go here
@@ -70,7 +67,9 @@ function OrderDetails() {
       </div>
       <div className="border border-gray-300 flex-1 max-w-xl bg-white rounded-lg shadow-xl p-6">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Order Details</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleOrder} className="space-y-4">
+          {" "}
+          {/* Use handleOrder here */}
           <div className="flex flex-col space-y-2">
             <input
               type="text"
@@ -123,7 +122,6 @@ function OrderDetails() {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition"
-            onClick={handleOrder}
           >
             Submit Order
           </button>

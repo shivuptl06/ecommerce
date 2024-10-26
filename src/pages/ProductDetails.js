@@ -5,14 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import Font
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"; // Import Shopping Cart icon
 import "./css/ProductDetails.css";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetails = () => {
   const { addToCart } = useCart();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
 
   function handleAddToCart(product) {
     addToCart(product);
+    navigate("/");
   }
 
   useEffect(() => {
