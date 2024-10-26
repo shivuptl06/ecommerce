@@ -8,11 +8,13 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { cart, removeFromCart } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleCart = () => {
     setIsCartOpen((prev) => !prev);
@@ -30,6 +32,11 @@ const Navbar = () => {
       setIsCartOpen(false);
     }
   };
+
+  function handleTitleClick(id) {
+    navigate(`/product/${id}`);
+    setIsCartOpen(false);
+  }
 
   useEffect(() => {
     if (isCartOpen) {
@@ -59,9 +66,7 @@ const Navbar = () => {
             className="focus:outline-none cursor-pointer hover:text-blue-600"
           >
             <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
-            <span className="hidden sm:inline">
-              Cart ({totalQuantity})
-            </span>
+            <span className="hidden sm:inline">Cart ({totalQuantity})</span>
           </button>
 
           <div
@@ -105,12 +110,18 @@ const Navbar = () => {
                         className="h-16 w-16 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium">{item.title}</h3>
+                        <h3
+                          className="font-medium cursor-pointer"
+                          onClick={() => handleTitleClick(item.id)}
+                        >
+                          {item.title}
+                        </h3>
                         <p className="text-gray-700">
                           ${Number(item.price).toFixed(2)} x {item.quantity}
                         </p>
                         <p className="text-gray-700">
-                          Total: ${Number(item.price * item.quantity).toFixed(2)}
+                          Total: $
+                          {Number(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                       <button
