@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const FlipCard = () => {
   const [isSignup, setIsSignup] = useState(true);
+  const navigate = useNavigate();
 
   const handleFlip = () => setIsSignup(!isSignup);
+
+  // Prevent default and handle navigation
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+    navigate("/"); // Navigate after form validation
+  };
 
   return (
     <div className="flex justify-center items-center h-screen min-w-screen bg-gray-100">
@@ -23,21 +31,24 @@ const FlipCard = () => {
               exit={{ opacity: 0 }}
             >
               <h2 className="text-2xl font-semibold mb-8">Signup</h2>
-              <form className="flex flex-col space-y-4 w-3/4">
+              <form className="flex flex-col space-y-4 w-3/4" onSubmit={handleSubmit}>
                 <input
                   type="text"
                   placeholder="Name"
                   className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  required
                 />
                 <input
                   type="email"
                   placeholder="Email"
                   className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  required
                 />
                 <input
                   type="password"
                   placeholder="Password"
                   className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  required
                 />
                 <button
                   type="submit"
@@ -62,16 +73,18 @@ const FlipCard = () => {
               exit={{ opacity: 0 }}
             >
               <h2 className="text-2xl font-semibold mb-4">Login</h2>
-              <form className="flex flex-col space-y-4 w-3/4">
+              <form className="flex flex-col space-y-4 w-3/4" onSubmit={handleSubmit}>
                 <input
                   type="email"
                   placeholder="Email"
                   className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  required
                 />
                 <input
                   type="password"
                   placeholder="Password"
                   className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  required
                 />
                 <button
                   type="submit"
