@@ -4,9 +4,11 @@ import { useCart } from "../context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
+  // eslint-disable-next-line
   faSignInAlt,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
+// eslint-disable-next-line
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -69,7 +71,7 @@ const Navbar = () => {
             <span className="hidden sm:inline">Cart ({totalQuantity})</span>
           </button>
 
-          <div
+          {/* <div
             className="cursor-pointer hover:text-blue-600"
             onClick={() => toast.success("Logged in successfully!")}
           >
@@ -83,6 +85,13 @@ const Navbar = () => {
           >
             <FontAwesomeIcon icon={faUserPlus} className="mr-1" />
             <span className="hidden sm:inline">Signup</span>
+          </div> */}
+          <div
+            className="cursor-pointer hover:text-blue-600"
+            onClick={() => navigate('/login')}
+          >
+            <FontAwesomeIcon icon={faUserPlus} className="mr-1" />
+            <span className="hidden sm:inline">Login/Sign Up</span>
           </div>
         </div>
       </nav>

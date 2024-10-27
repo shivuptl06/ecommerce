@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+// eslint-disable-next-line
 import { toast } from "react-toastify";
 
 const ProductCard = ({ product }) => {
@@ -12,7 +13,9 @@ const ProductCard = ({ product }) => {
     addToCart(product);
   };
 
-  const discountedPrice = product.price - 3; 
+  
+
+  const discountedPrice = product.price - 3;
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
@@ -30,14 +33,12 @@ const ProductCard = ({ product }) => {
         <p className="text-gray-700 font-light text-base">
           WAS:
           <span className="text-gray-400 line-through font-light text-base">
-            {" "}
             ${product.price}
           </span>
         </p>
         <div className="flex items-baseline">
           <span className="text-black-700 font-extrabold text-2xl">NOW:</span>
           <span className="text-red-500 font-extrabold text-2xl">
-            {" "}
             ${discountedPrice}
           </span>
         </div>

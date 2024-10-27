@@ -17,7 +17,7 @@ function PayCard({ totalPrice }) {
   }, [cart]);
 
   function applyCoupon() {
-    if (couponCode === "SAVE10" && couponApplied===false) {
+    if (couponCode === "SAVE10" && couponApplied === false) {
       setCouponDiscount(10);
       setCouponApplied(true);
       toast.success("Coupon applied successfully!");
@@ -30,9 +30,11 @@ function PayCard({ totalPrice }) {
     setCouponCode("");
   }
 
+  const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   const finalTotal = (
-    Number(totalPrice) -
-    Number(discount) -
+    Number(totalPrice) - 
+    Number(discount) - 
     couponDiscount
   ).toFixed(2);
 
@@ -64,7 +66,7 @@ function PayCard({ totalPrice }) {
       {/* Price Section */}
       <div className="flex border-t pt-4 mt-4 space-x-12 justify-between">
         <span className="font-semibold text-lg">
-          Price ({cart.length} Items) :
+          Price ({totalQuantity} Items) :
         </span>
         <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
       </div>
